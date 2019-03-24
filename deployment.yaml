@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replaceMe
+spec:
+  selector:
+    matchLabels:
+      app: replaceMe
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: replaceMe
+    spec:
+      containers:
+      - name: replaceMe
+        image: replaceMe:latest
+        ports:
+          - containerPort: 3000
+        livenessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          httpGet:
+            path: /health
+            port: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: replaceMe-alb
+  labels:
+    app: replaceMe
+spec:
+  selector:
+    app: replaceMe
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3000
