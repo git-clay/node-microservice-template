@@ -1,12 +1,12 @@
 import replaceEntity from './replaceEntity';
 import HealthCheck from './HealthCheck';
-import server from '../shared/server';
+import server from '../shared/server/app';
 
 export default {
   /**
    * Start routes of server
    */
-  initRoutes() {
+  initControllers() {
     server.use('/replaceEntity', replaceEntity);
     server.use('/health', HealthCheck);
   }

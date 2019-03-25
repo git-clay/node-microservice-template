@@ -1,3 +1,12 @@
+  
+  add back to package.json if you want commits to be blocked by tests/lint
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lint && yarn run test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+
 # replaceMe
 
 Initial template for your services!.
@@ -54,7 +63,7 @@ export const sampleBussinesMethod = async (req, res, next) => {
 
 If you have custom behavior in your controller, just create new methods there.
 
-Then, in the route definitions, use your business layer (see `src/routes/entityRoute/index.ts)
+Then, in the route definitions, use your business layer (see `src/controllers/entityRoute/index.ts)
 
 With POST/PUT requests, you'll write something like this:
 

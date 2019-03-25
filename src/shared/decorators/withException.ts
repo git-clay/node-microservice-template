@@ -2,7 +2,7 @@ import GenericException from "../exceptions/GenericException";
 
 export default function withException(target, name, descriptor) {
   const original = descriptor.value;
-  descriptor.value = async function(...args) {
+  descriptor.value = async (...args) => {
     try {
       await original.apply(this, args);
     }

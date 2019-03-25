@@ -1,13 +1,17 @@
 {
-  "name": "replaceMe",
+  "name": "replaceme",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha -r ts-node/register src/**/*.spec.ts",
+    "start": "gulp --gulpfile app/gulpfile.js",
+    "test": "NODE_ENV=test mocha -r ts-node/register test/**/*.spec.ts",
     "clean": "rm -rf dist/",
     "build": "npm run clean && tsc",
-    "build:docker": "docker build . -t replaceMe",
+    "build:prod": "docker build -t=prod .",
+    "docker:build": "docker build . -t=replaceme",
+    "docker:run": "docker run -d -p 4000:80 replaceme",
+    "docker:stop": "docker container stop #ContainerId#",
     "publish:docker": "docker push replaceMe",
     "server": "node dist/index.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
@@ -16,15 +20,8 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@commitlint/cli": "^7.3.2",
-    "@commitlint/config-conventional": "^7.3.1",
-    "@types/chai": "^4.1.4",
-    "@types/mocha": "^5.2.5",
-    "@types/mongoose": "^5.0.18",
-    "@types/redis": "^2.8.6",
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
-    "chai": "^4.1.2",
     "compression": "^1.7.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
@@ -32,25 +29,32 @@
     "express-validator": "^5.2.0",
     "figlet": "^1.2.0",
     "http-status-codes": "^1.3.0",
-    "husky": "^1.3.1",
-    "mocha": "^5.2.0",
-    "mongodb": "^3.0.4",
-    "mongoose": "^5.1.7",
+    "knex": "^0.16.3",
+    "moment": "^2.15.2",
     "morgan": "^1.9.0",
-    "redis": "^2.8.0",
-    "ts-node": "^7.0.0",
-    "typescript": "^2.9.2"
+    "pg": "^7.9.0",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^7.3.2",
+    "@commitlint/config-conventional": "^7.3.1",
     "@types/body-parser": "^1.17.0",
+    "@types/chai": "^4.1.4",
+    "@types/dotenv": "^6.1.0",
     "@types/express": "^4.16.0",
+    "@types/mocha": "^5.2.5",
     "@types/node": "^10.3.6",
-    "source-map-support": "^0.5.9"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn run lint && yarn run test",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
+    "@types/pg": "^7.4.14",
+    "@types/redis": "^2.8.6",
+    "chai": "^4.1.2",
+    "gulp": "^4.0.0",
+    "gulp-eslint": "^3.0.1",
+    "gulp-nodemon": "^2.2.1",
+    "husky": "^1.3.1",
+    "mocha": "^5.2.0",
+    "source-map-support": "^0.5.9",
+    "ts-node": "^7.0.0",
+    "typescript": "^2.9.2"
   }
+
 }

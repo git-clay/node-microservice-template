@@ -1,21 +1,25 @@
-export interface IMongoModel {
+/**
+ * ! Just replaced 'Mongo' with 'Postgres' without looking into it too much ... a lot might need to be done here
+ */
+
+export interface IPostgresModel {
   _id?: string;
   __v?: any;
   _doc?: any;
   createdAt?: string;
   updatedAt?: string;
 }
-export type MongoOperations<T> = T | MongoOperationsInternal<T>;
+export type PostgresOperations<T> = T | PostgresOperationsInternal<T>;
 
 /**
- * MongoMerger is all attrs from model + all logicalOperators on toplevel
- * If you use attr as a object, all other expressions from mongo appear as $lt, $gte etc
+ * PostgresMerger is all attrs from model + all logicalOperators on toplevel
+ * If you use attr as a object, all other expressions from Postgres appear as $lt, $gte etc
  */
-export type MongoMerger<T> = MongoLogicalOperations<T> & {
-  [P in keyof T]?: MongoOperations<T[P]>;
+export type PostgresMerger<T> = PostgresLogicalOperations<T> & {
+  [P in keyof T]?: PostgresOperations<T[P]>;
 };
 
-export enum MongoBSONTypes {
+export enum PostgresBSONTypes {
   DOUBLE = 1,
   STRING,
   OBJECT,
@@ -41,7 +45,7 @@ export enum MongoBSONTypes {
 
 type geoJSONPoint = [number, number];
 
-interface MongoGeometries {
+interface PostgresGeometries {
   type: 'Polygon' |
   'Overview' |
   'Point' |
@@ -53,11 +57,11 @@ interface MongoGeometries {
   coordinates?: geoJSONPoint | [geoJSONPoint] | [[geoJSONPoint]] | [[[geoJSONPoint]]];
   crs?: {
     type: 'name',
-    properties: { name: 'urn:x-mongodb:crs:strictwinding:EPSG:4326' }
+    properties: { name: 'urn:x-Postgresdb:crs:strictwinding:EPSG:4326' }
   };
-  geometries?: MongoGeometries;
+  geometries?: PostgresGeometries;
 }
-interface MongoComparisonOperators<T> {
+interface PostgresComparisonOperators<T> {
   /**
    * Matches any of the values specified in an array.
    */
@@ -91,7 +95,7 @@ interface MongoComparisonOperators<T> {
    */
   $ne?: T;
 }
-interface MongoArrayOperators<T> {
+interface PostgresArrayOperators<T> {
   /**
    * The $all operator selects the documents where the value of a field is an array that contains all the specified elements.
    */
@@ -101,13 +105,13 @@ interface MongoArrayOperators<T> {
    * the specified query criteria.
    * If you specify only a single <query> condition in the $elemMatch expression, you do not need to use $elemMatch.
    */
-  $elemMatch?: MongoOperationsInternal<T>;
+  $elemMatch?: PostgresOperationsInternal<T>;
   /**
    * The $size operator matches any array with the number of elements specified by the argument.
    */
   $size?: number;
 }
-interface MongoElementOperators {
+interface PostgresElementOperators {
   /**
    * Matches documents that have the specified field.
    */
@@ -117,7 +121,7 @@ interface MongoElementOperators {
    */
   $type?: number[];
 }
-interface MongoEvaluationOperators {
+interface PostgresEvaluationOperators {
   /**
    * Performs a modulo operation on the value of a field and selects documents with a specified result.
    */
@@ -127,7 +131,7 @@ interface MongoEvaluationOperators {
    */
   $regex?: RegExp;
   /**
-   * Option object used by $regex operator https://docs.mongodb.com/manual/reference/operator/query/regex/#op._S_options
+   * Option object used by $regex operator https://docs.Postgresdb.com/manual/reference/operator/query/regex/#op._S_options
    */
   $options?: string;
   /**
@@ -135,8 +139,8 @@ interface MongoEvaluationOperators {
    */
   $text?: {
     /**
-     * A string of terms that MongoDB parses and uses to query the text index.
-     * MongoDB performs a logical OR search of the terms unless specified as a phrase.
+     * A string of terms that PostgresDB parses and uses to query the text index.
+     * PostgresDB performs a logical OR search of the terms unless specified as a phrase.
      * See Behavior for more information on the field.
      */
     $search: string,
@@ -170,9 +174,9 @@ interface MongoEvaluationOperators {
    */
   $where?: () => void;
 }
-interface MongoGeospatialOperators {
+interface PostgresGeospatialOperators {
   $geoIntersects?: {
-    $geometry: MongoGeometries
+    $geometry: PostgresGeometries
   };
   /**
    * Specifies a point for which a geospatial query returns the documents from nearest to farthest.
@@ -203,7 +207,7 @@ interface MongoGeospatialOperators {
   };
   /**
    * Specifies a point for which a geospatial query returns the documents from nearest to farthest.
-   * MongoDB calculates distances for $nearSphere using spherical geometry.
+   * PostgresDB calculates distances for $nearSphere using spherical geometry.
    * $nearSphere requires a geospatial index:
    *    2dsphere index for location data defined as GeoJSON points
    *    2d index for location data defined as legacy coordinate pairs.
@@ -219,28 +223,28 @@ interface MongoGeospatialOperators {
     $minDistance: number;
   };
 }
-interface MongoLogicalOperations<T> {
+interface PostgresLogicalOperations<T> {
   /**
    * Joins query clauses with a logical AND returns all documents that match the conditions of both clauses.
    */
-  $and?: Array<MongoMerger<T>>;
+  $and?: Array<PostgresMerger<T>>;
   /**
    * Inverts the effect of a query expression and returns documents that do not match the query expression
    */
-  $not?: Array<MongoMerger<T>>;
+  $not?: Array<PostgresMerger<T>>;
   /**
    * Joins query clauses with a logical NOR returns all documents that fail to match both clauses.
    */
-  $nor?: Array<MongoMerger<T>>;
+  $nor?: Array<PostgresMerger<T>>;
   /**
    * Joins query clauses with a logical OR returns all documents that match the conditions of either clause.
    */
-  $or?: Array<MongoMerger<T>>;
+  $or?: Array<PostgresMerger<T>>;
 }
-interface MongoOperationsInternal<T> extends
-  MongoComparisonOperators<T>,
-  MongoGeospatialOperators,
-  MongoArrayOperators<T>,
-  MongoElementOperators,
-  MongoEvaluationOperators {
+interface PostgresOperationsInternal<T> extends
+  PostgresComparisonOperators<T>,
+  PostgresGeospatialOperators,
+  PostgresArrayOperators<T>,
+  PostgresElementOperators,
+  PostgresEvaluationOperators {
 }

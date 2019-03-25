@@ -4,7 +4,7 @@ import { check, validationResult } from 'express-validator/check';
 import UnprocessableEntityException from '../../shared/exceptions/UnprocessableEntityException';
 import providers from '../../config/providers';
 
-const replaceEntityBusiness = providers.replaceEntityBusiness;
+// const replaceEntityBusiness = providers.replaceEntityBusiness;
 
 const router = Router();
 const checkEntityGet = [
@@ -17,7 +17,7 @@ router.get('/', checkEntityGet, (req: Request, res: Response, next: NextFunction
     next(new UnprocessableEntityException(errors.array()));
     return;
   }
-  replaceEntityBusiness.getreplaceEntitys(req, res, next);
+  // replaceEntityBusiness.getreplaceEntitys(req, res, next);
 });
 
 export default router;

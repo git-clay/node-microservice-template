@@ -1,17 +1,17 @@
-import Connection from "../shared/class/Connection";
+import Connection from '../data/connection';
 
-import replaceEntityController from "../entities/replaceEntity/replaceEntityController";
-import replaceEntityBusiness from "../entities/replaceEntity/replaceEntityBusiness";
+// import replaceEntityController from "../entities/replaceEntity/replaceEntityController";
+// import replaceEntityBusiness from "../entities/replaceEntity/replaceEntityBusiness";
 
 const providers = (() => {
-  const replaceEntityController = new replaceEntityController();
-  const connection = new Connection();
-  const replaceEntityBusiness = new replaceEntityBusiness(replaceEntityController);
+  // const replaceEntityController = new replaceEntityController();
+  const connection = Connection;
+  // const replaceEntityBusiness = new replaceEntityBusiness(replaceEntityController);
 
   return {
     connection,
-    replaceEntityController,
-    replaceEntityBusiness
+    // replaceEntityController,
+    // replaceEntityBusiness
   };
 })();
 

@@ -1,7 +1,20 @@
-FROM node:8.9-alpine
-ENV NODE_ENV production
-WORKDIR /api
-COPY ./node_modules ./node_modules
-COPY ./dist ./dist
-EXPOSE 3000
-CMD node dist/index.js
+FROM node:alpine-11
+
+# set working directory
+RUN mkdir /usr/src/app
+WORKDIR /usr/src
+
+# add `/usr/src/node_modules/.bin` to $PATH
+ENV PATH /usr/src/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+ADD package.json /usr/src/package.json
+RUN npm install
+
+ENV NODE_ENV = 'development' #todo -> dynamic with ARG
+EXPOSE 80
+COPY ./src /usr/src/app
+
+
+# start app
+CMD ["npm", "start"]
