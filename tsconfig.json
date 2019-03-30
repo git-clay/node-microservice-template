@@ -5,6 +5,10 @@
     "outDir": "dist",
     "experimentalDecorators": true,
     "inlineSourceMap": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
     "lib": [
       "es2017"
     ]

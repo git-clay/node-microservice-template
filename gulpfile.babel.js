@@ -1,11 +1,13 @@
-import { task } from 'gulp';
+'use strict';
+
+import gulp from 'gulp';
 import nodemon from 'gulp-nodemon';
 
 /*
 tasks
  */
 
-task('start', () => {
+gulp.task('start', () => {
   nodemon({
     script: './src/server',
     ext: 'ts html',

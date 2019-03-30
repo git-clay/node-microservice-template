@@ -1,7 +1,7 @@
 import * as path from 'path';
 
 module.exports = {
-  development: {
+  dev: {
     client: 'pg',
     connection: process.env.DATABASE_URL,
     migrations: {
@@ -21,9 +21,8 @@ module.exports = {
       directory: path.join(__dirname, 'src', 'db', 'seeds')
     }
   },
-  // },
 
-  production: {
+  prod: {
     client: 'postgresql',
     connection: {
       database: '/* AWS_RDS_URL */',

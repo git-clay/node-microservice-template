@@ -1,7 +1,7 @@
 FROM node:alpine-11
 
 # set working directory
-RUN mkdir /usr/src/app
+RUN mkdir /usr/src
 WORKDIR /usr/src
 
 # add `/usr/src/node_modules/.bin` to $PATH
@@ -13,7 +13,7 @@ RUN npm install
 
 ENV NODE_ENV = 'development' #todo -> dynamic with ARG
 EXPOSE 80
-COPY ./src /usr/src/app
+COPY ./src /usr/src
 
 
 # start app

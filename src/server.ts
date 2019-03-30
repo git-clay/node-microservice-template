@@ -8,7 +8,7 @@ import providers from './config/providers';
 import app from './shared/server/app';
 
 sourceMapSupport.install();
-process.on('unhandledRejection', console.log);
+// process.on('unhandledRejection', console.log);
 
 const _knexConn = providers.connection;
 
